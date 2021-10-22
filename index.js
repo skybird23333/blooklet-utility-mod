@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Blooklet Utility Mod
-// @version      0.1
+// @version      0.2
 // @description  This script is created for research and educational purposes. Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
 // @author       https://github.com/skybird23333
 // @match        https://www.blooket.com/play*
@@ -49,10 +49,12 @@ style.innerHTML = `
   width: 100%;
   border: none;
   background-color: white;
+  padding: 4px;
 }
 
 .menu-option:hover {
-  background-color: gray;
+  background-color: rebeccapurple;
+  color: white;
 }
 
 .menu-option-active {
@@ -67,7 +69,7 @@ const elm = document.createElement('div')
 elm.id = "amogus"
 document.body.appendChild(elm)
 
-Vue.component('question-info', {
+Vue.component('quiz-info', {
     template: `
     <div>
         <div v-if="$root.quiz.title">
@@ -88,13 +90,25 @@ Vue.component('question-info', {
      `
 })
 
+Vue.component('skin-unlocks', {
+    template: `
+    <div>
+        <div v-if="$root.skin.fetched">
+          <input type="checkbox" disabled :checked="$root.skin.unlock"> Whether or not to unlock partial skins up to Ghost. You can only change skin unlock settings before joining the game. Refer to README.
+        </div>
+        <div v-else>
+          <input type="checkbox" v-model="$root.skin.unlock"> Whether or not to unlock partial skins up to Ghost. <b>This option will be disabled upon joining a game. Refer to README.</b>
+        </div>
+    </div>
+     `
+})
+
 Vue.component('quiz-answers', {
     template: `
     <div>
-            <b>Work in progress</b>
+        <b>Work in progress</b>
     </div>
     `,
-
 })
 
 window.aapp = new Vue({
@@ -109,11 +123,15 @@ window.aapp = new Vue({
                 Choose a module from the right.
             </div>
             <div class="menu">
+                <div>
+                  <b style="font-size: large">AMOGUS</b>
+                  <a href="https://github.com/skybird23333/blooklet-utility-mod" target="_blank" rel="noopener noreferrer">Github</a> <i>v0.2</i>
+                </div>
                 <button
                   v-for="menuItem in menu"
                   class="menu-option"
                   @click="open_menu = menuItem"
-                  :class="{'menu-option-active':'menuItem === open_menu'}"
+                  :class="[(menuItem === open_menu)? '' : '.menu-option-active']"
                 >
                 {{ menuItem.replace('-',' ') }}
                 </button>
@@ -126,9 +144,14 @@ window.aapp = new Vue({
         mod_open: false,
         open_menu: null,
         menu: [
-            "question-info",
-            "quiz-answers"
-        ]
+            "quiz-info",
+            "quiz-answers",
+            "skin-unlocks"
+        ],
+        skin: {
+          fetched: false,
+          unlock: false
+        }
     },
     updated() {
         this.$nextTick(function () {
@@ -188,6 +211,14 @@ function modifyRequestObject(xhr) {
                     console.log(`${question.question}: ${question.correctAnswers.join(', ')}`)
                 }
             })
+        }
+        if (arguments[1].includes("/api/users/unlocks")) {
+            window.aapp.$data.skin.fetched = true
+            if(window.aapp.$data.skin.unlock) {
+                const fakeData = {"unlocks":["Milk","Yogurt","Cereal","Unicorn","Slime Monster","Dragon","Meteor","Drink Me","UFO","Earth","Lovely Bot","White Rabbit","Frog","Old Boot","Crab","Clownfish","Jellyfish","Blobfish","Octopus","Pufferfish","Baby Shark","Narwhal","Zombie","Vampire","Frankenstein","Swamp Monster","Mummy","Pumpkin","Werewolf","Breakfast Combo","Ghost"],"customBlooks":[]}
+                arguments[1] = 'data:application/json,' + JSON.stringify(fakeData)
+            }
+
         }
         _open.apply(this, arguments);
     }
