@@ -5,6 +5,7 @@
 // @author       https://github.com/skybird23333
 // @match        https://www.blooket.com/play*
 // @require      https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js
+// @updateURL    https://raw.githubusercontent.com/skybird23333/blooklet-utility-mod/main/index.js
 // @grant        none
 // ==/UserScript==
 
