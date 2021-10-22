@@ -1,16 +1,15 @@
 // ==UserScript==
 // @name         Blooklet Utility Mod
 // @version      0.1
-// @description  This script is created for research and education purposes. Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
+// @description  This script is created for research and educational purposes. Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
 // @author       https://github.com/skybird23333
 // @match        https://www.blooket.com/play*
-// @match        https://skybord.xyz
 // @require      https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js
 // @grant        none
 // ==/UserScript==
 
 /**
- * This script is created for research and education purposes.
+ * This script is created for research and educational purposes.
  * Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
  */
 
@@ -33,11 +32,14 @@ style.innerHTML = `
   width: 250px;
   background-color: white;
   display: inline-block;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid gray;
 }
 
 .menu {
-  width: min-content;
-  border: 1px solid black;
+  width: 100px;
+  border: 1px solid gray;
   background-color: white;
   display: inline-block;
   margin-left: 3px;
@@ -46,6 +48,16 @@ style.innerHTML = `
 .menu-option {
   width: 100%;
   border: none;
+  background-color: white;
+}
+
+.menu-option:hover {
+  background-color: gray;
+}
+
+.menu-option-active {
+  background-color: rebeccapurple;
+  color: white;
 }
 `
 
@@ -66,7 +78,7 @@ Vue.component('question-info', {
             <b>Favourite count</b> {{ $root.quiz.favouriteCount || 0 }} <br>
             <b>Private:</b> {{ $root.quiz.private }} <br>
             <a :href="'https://www.blooket.com/set/' + $root.quiz._id">View quiz</a>
-            <a :href="'https://www.blooket.com/host?id=' + $root.quiz._id">Hos</a>
+            <a :href="'https://www.blooket.com/host?id=' + $root.quiz._id">Host quiz</a>
         </div>
         <div v-else="">
             <b>Quiz data not available.</b>
@@ -81,7 +93,8 @@ Vue.component('quiz-answers', {
     <div>
             <b>Work in progress</b>
     </div>
-     `
+    `,
+
 })
 
 window.aapp = new Vue({
@@ -100,8 +113,9 @@ window.aapp = new Vue({
                   v-for="menuItem in menu"
                   class="menu-option"
                   @click="open_menu = menuItem"
+                  :class="{'menu-option-active':'menuItem === open_menu'}"
                 >
-                {{ menuItem }}
+                {{ menuItem.replace('-',' ') }}
                 </button>
             </div>
         </div>
