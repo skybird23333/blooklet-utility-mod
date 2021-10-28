@@ -95,10 +95,10 @@ Vue.component('skin-unlocks', {
     template: `
     <div>
         <div v-if="$root.skin.fetched">
-          <input type="checkbox" disabled :checked="$root.skin.unlock"> Whether or not to unlock partial skins up to Ghost. You can only change skin unlock settings before joining the game. Refer to README.
+          <input type="checkbox" disabled :checked="$root.skin.unlock"> Whether or not to unlock partial skins. You can only change skin unlock settings before joining the game.
         </div>
         <div v-else>
-          <input type="checkbox" v-model="$root.skin.unlock"> Whether or not to unlock partial skins up to Ghost. <b>This option will be disabled upon joining a game. Refer to README.</b>
+          <input type="checkbox" v-model="$root.skin.unlock"> Whether or not to unlock partial skins. <b>You can only change skin unlock settings before joining the game.</b>
         </div>
     </div>
      `
@@ -118,7 +118,9 @@ window.aapp = new Vue({
     <div style="position:absolute;right:0;bottom:0;">
         <div class="modContent">
             <div class="content" v-if="open_menu">
-                <component :is="open_menu"/>
+                <keep-alive>
+                    <component :is="open_menu"/>
+                </keep-alive>
             </div>
             <div class="content" v-else>
                 Choose a module from the right.
@@ -216,7 +218,16 @@ function modifyRequestObject(xhr) {
         if (arguments[1].includes("/api/users/unlocks")) {
             window.aapp.$data.skin.fetched = true
             if(window.aapp.$data.skin.unlock) {
-                const fakeData = {"unlocks":["Milk","Yogurt","Cereal","Unicorn","Slime Monster","Dragon","Meteor","Drink Me","UFO","Earth","Lovely Bot","White Rabbit","Frog","Old Boot","Crab","Clownfish","Jellyfish","Blobfish","Octopus","Pufferfish","Baby Shark","Narwhal","Zombie","Vampire","Frankenstein","Swamp Monster","Mummy","Pumpkin","Werewolf","Breakfast Combo","Ghost"],"customBlooks":[]}
+                const fakeData = {"unlocks":[
+                              "Elf", "Witch", "Wizard", "Fairy", "Slime", "Monster", "Jester", "Dragon", "Queen", "Unicorn", "King", //medieval box
+                              "Two of Spades", "Eat Me", "Drink Me", "Alice", "Queen of Hearts", "Dormouse", "White Rabbit", "Cheshire Cat", "Caterpillar", "Mad Hatter", "King of Hearts", //wonderland box
+                              "Earth", "Meteor", "Stars", "Alien", "Planet", "UFO", "Spaceship", "Astronaut", "Pink Astronaut", "Yellow Astronaut", "Black Astronaut", "Orange Astronaut", "Red Astronaut", "Brown Astronaut", //space box
+                              "Old Boot", "Jellyfish", "Clownfish", "Frog", "Crab", "Pufferfish", "Blobfish", "Octopus", "Narwhal", "Baby Shark", "Megalodon", //aquatic box
+                              "Toast", "Cereal", "Yogurt", "Breakfast Combo", "Orange Juice", "Milk", "Waffle", "Pancakes", "French Toast", "Pizza", //breakfast box
+                              "Lil Bot", "Lovely Bot", "Angry Bot", "Happy Bot", "Watson", "Buddy Bot", "Brainy Bot", "Mega Bot", //bot box
+                              "Pumpkin", "Swamp Monster", "Frankenstein", "Vampire", "Zombie", "Mummy", "Werewolf", "Ghost", "Haunted Pumpkin", //spooky box
+                              "Sandwich" //sandvich
+                                  ],"customBlooks":[]}
                 arguments[1] = 'data:application/json,' + JSON.stringify(fakeData)
             }
 
