@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Blooklet Utility Mod
-// @version      0.2
+// @version      0.2.1
 // @description  This script is created for research and educational purposes. Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
 // @author       https://github.com/skybird23333
 // @match        https://www.blooket.com/play*
@@ -95,10 +95,10 @@ Vue.component('skin-unlocks', {
     template: `
     <div>
         <div v-if="$root.skin.fetched">
-          <input type="checkbox" disabled :checked="$root.skin.unlock"> Whether or not to unlock partial skins. You can only change skin unlock settings before joining the game.
+          <input type="checkbox" disabled :checked="$root.skin.unlock"> Whether or not to unlock partial skins. You can only change skin unlock settings before joining the game. Refer to README.
         </div>
         <div v-else>
-          <input type="checkbox" v-model="$root.skin.unlock"> Whether or not to unlock partial skins. <b>You can only change skin unlock settings before joining the game.</b>
+          <input type="checkbox" v-model="$root.skin.unlock"> Whether or not to unlock partial skins. <b>This option will be disabled upon joining a game. Refer to README.</b>
         </div>
     </div>
      `
@@ -228,7 +228,7 @@ function modifyRequestObject(xhr) {
                               "Pumpkin", "Swamp Monster", "Frankenstein", "Vampire", "Zombie", "Mummy", "Werewolf", "Ghost", "Haunted Pumpkin", //spooky box
                               "Sandwich" //sandvich
                                   ],"customBlooks":[]}
-                arguments[1] = 'data:application/json,' + JSON.stringify(fakeData)
+                arguments[1] = 'data:application/json,' + encodeURI(JSON.stringify(fakeData))
             }
 
         }
