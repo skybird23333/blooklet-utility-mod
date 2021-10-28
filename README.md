@@ -14,7 +14,7 @@ A userscript for Blooklet, compatible with tampermonkey.
 
 # Usage
 ## Tampermonkey
-1. Install Tampermonkey.
+1. Install [Tampermonkey](https://www.tampermonkey.net/).
 2. Add the contents of index.js to tampermonkey.
 3. Restart your browser.
 4. Open https://www.blooket.com/play/
