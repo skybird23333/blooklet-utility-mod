@@ -219,9 +219,9 @@ function modifyRequestObject(xhr) {
         }
 
         const fakeData = {"unlocks":[
-            "Elf", "Witch", "Wizard", "Fairy", "Slime", "Monster", "Jester", "Dragon", "Queen", "Unicorn", "King", //medieval box
-            "Two of Spades", "Eat Me", "Drink Me", "Alice", "Queen of Hearts", "Dormouse", "White Rabbit", "Cheshire Cat", "Caterpillar", "Mad Hatter", "King of Hearts", //wonderland box
-            "Earth", "Meteor", "Stars", "Alien", "Planet", "UFO", "Spaceship", "Astronaut", "Pink Astronaut", "Yellow Astronaut", "Black Astronaut", "Orange Astronaut", "Red Astronaut", "Brown Astronaut", //space box
+                              "Elf", "Witch", "Wizard", "Fairy", "Slime", "Monster", "Jester", "Dragon", "Queen", "Unicorn", "King", //medieval box
+                              "Two of Spades", "Eat Me", "Drink Me", "Alice", "Queen of Hearts", "Dormouse", "White Rabbit", "Cheshire Cat", "Caterpillar", "Mad Hatter", "King of Hearts", //wonderland box
+                              "Earth", "Meteor", "Stars", "Alien", "Planet", "UFO", "Spaceship", "Astronaut", "Pink Astronaut", "Yellow Astronaut", "Black Astronaut", "Orange Astronaut", "Red Astronaut", "Brown Astronaut", //space box
                               "Old Boot", "Jellyfish", "Clownfish", "Frog", "Crab", "Pufferfish", "Blobfish", "Octopus", "Narwhal", "Baby Shark", "Megalodon", //aquatic box
                               "Toast", "Cereal", "Yogurt", "Breakfast Combo", "Orange Juice", "Milk", "Waffle", "Pancakes", "French Toast", "Pizza", //breakfast box
                               "Lil Bot", "Lovely Bot", "Angry Bot", "Happy Bot", "Watson", "Buddy Bot", "Brainy Bot", "Mega Bot", //bot box
