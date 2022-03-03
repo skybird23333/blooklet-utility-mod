@@ -215,9 +215,7 @@ function modifyRequestObject(xhr) {
                 }
             })
         }
-        if (arguments[1].includes("/api/users/unlocks")) {
-            window.aapp.$data.skin.fetched = true
-            if(window.aapp.$data.skin.unlock) {
+
                 const fakeData = {"unlocks":[
                               "Elf", "Witch", "Wizard", "Fairy", "Slime", "Monster", "Jester", "Dragon", "Queen", "Unicorn", "King", //medieval box
                               "Two of Spades", "Eat Me", "Drink Me", "Alice", "Queen of Hearts", "Dormouse", "White Rabbit", "Cheshire Cat", "Caterpillar", "Mad Hatter", "King of Hearts", //wonderland box
@@ -228,8 +226,18 @@ function modifyRequestObject(xhr) {
                               "Pumpkin", "Swamp Monster", "Frankenstein", "Vampire", "Zombie", "Mummy", "Werewolf", "Ghost", "Haunted Pumpkin", //spooky box
                               "Sandwich" //sandvich
                                   ],"customBlooks":[]}
-                arguments[1] = 'data:application/json,' + encodeURI(JSON.stringify(fakeData))
+
+        if (arguments[1].includes("/api/users/unlocks")) {
+            console.log('[MOD] Skin is fetched')
+            window.aapp.$data.skin.fetched = true
+            this.addEventListener('readystatechange', function(event) {
+                if ( this.readyState === 4 ) {
+                    Object.defineProperty(this, 'response',     {writable: true});
+                    Object.defineProperty(this, 'responseText', {writable: true});
+                    this.response = this.responseText = JSON.stringify(fakeData);
             }
+            });
+            
 
         }
         _open.apply(this, arguments);
