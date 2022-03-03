@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Blooklet Utility Mod
-// @version      0.2.1
+// @version      0.2.2
 // @description  This script is created for research and educational purposes. Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
 // @author       https://github.com/skybird23333
 // @match        https://www.blooket.com/play*
@@ -77,11 +77,9 @@ Vue.component('quiz-info', {
             <b>{{ $root.quiz.title }}</b> <i>by {{ $root.quiz.author }}</i><br>
             <span style="font-family: Consolas,monaco,monospace;">id: {{ $root.quiz._id }}</span>
             {{ $root.quiz.desc }}<br>
-            <b>Play count</b> {{ $root.quiz.playCount }} <br>
-            <b>Favourite count</b> {{ $root.quiz.favouriteCount || 0 }} <br>
-            <b>Private:</b> {{ $root.quiz.private }} <br>
+            {{ $root.quiz.playCount }} plays | {{ $root.quiz.favouriteCount || 0 }} favs <br>
+            {{ $root.quiz.private ? 'Private' : 'Public' }} <br>
             <a :href="'https://www.blooket.com/set/' + $root.quiz._id">View quiz</a>
-            <a :href="'https://www.blooket.com/host?id=' + $root.quiz._id">Host quiz</a>
         </div>
         <div v-else="">
             <b>Quiz data not available.</b>
@@ -94,11 +92,14 @@ Vue.component('quiz-info', {
 Vue.component('skin-unlocks', {
     template: `
     <div>
+        Whether or not to unlock partial skins.<br>
+        [!] This option will be disabled upon joining a game.<br>
+        [!] You will need to log into blooket.
         <div v-if="$root.skin.fetched">
-          <input type="checkbox" disabled :checked="$root.skin.unlock"> Whether or not to unlock partial skins. You can only change skin unlock settings before joining the game. Refer to README.
+          <input type="checkbox" disabled :checked="$root.skin.unlock">
         </div>
         <div v-else>
-          <input type="checkbox" v-model="$root.skin.unlock"> Whether or not to unlock partial skins. <b>This option will be disabled upon joining a game. Refer to README.</b>
+          <input type="checkbox" v-model="$root.skin.unlock">
         </div>
     </div>
      `
@@ -127,7 +128,7 @@ window.aapp = new Vue({
             </div>
             <div class="menu">
                 <div>
-                  <b style="font-size: large">AMOGUS</b>
+                  <b style="font-size: large">Menu</b>
                   <a href="https://github.com/skybird23333/blooklet-utility-mod" target="_blank" rel="noopener noreferrer">Github</a> <i>v0.2</i>
                 </div>
                 <button
@@ -153,8 +154,9 @@ window.aapp = new Vue({
         ],
         skin: {
           fetched: false,
-          unlock: false
-        }
+          unlock: true
+        },
+        questions: {}
     },
     updated() {
         this.$nextTick(function () {
@@ -206,20 +208,20 @@ function modifyRequestObject(xhr) {
 
     proto.open = function () {
         if (arguments[1].includes("/api/games")) {
-            console.log('answer is fetched')
+            console.log('[MOD] Answer is fetched')
             this.addEventListener("load", function () {
                 window.aapp.$data.quiz = JSON.parse(this.responseText)
-                console.log(this.responseText)
+                window.aapp.$data.questions = JSON.parse(this.responseText).questions
                 for (const question of JSON.parse(this.responseText).questions) {
                     console.log(`${question.question}: ${question.correctAnswers.join(', ')}`)
                 }
             })
         }
 
-                const fakeData = {"unlocks":[
-                              "Elf", "Witch", "Wizard", "Fairy", "Slime", "Monster", "Jester", "Dragon", "Queen", "Unicorn", "King", //medieval box
-                              "Two of Spades", "Eat Me", "Drink Me", "Alice", "Queen of Hearts", "Dormouse", "White Rabbit", "Cheshire Cat", "Caterpillar", "Mad Hatter", "King of Hearts", //wonderland box
-                              "Earth", "Meteor", "Stars", "Alien", "Planet", "UFO", "Spaceship", "Astronaut", "Pink Astronaut", "Yellow Astronaut", "Black Astronaut", "Orange Astronaut", "Red Astronaut", "Brown Astronaut", //space box
+        const fakeData = {"unlocks":[
+            "Elf", "Witch", "Wizard", "Fairy", "Slime", "Monster", "Jester", "Dragon", "Queen", "Unicorn", "King", //medieval box
+            "Two of Spades", "Eat Me", "Drink Me", "Alice", "Queen of Hearts", "Dormouse", "White Rabbit", "Cheshire Cat", "Caterpillar", "Mad Hatter", "King of Hearts", //wonderland box
+            "Earth", "Meteor", "Stars", "Alien", "Planet", "UFO", "Spaceship", "Astronaut", "Pink Astronaut", "Yellow Astronaut", "Black Astronaut", "Orange Astronaut", "Red Astronaut", "Brown Astronaut", //space box
                               "Old Boot", "Jellyfish", "Clownfish", "Frog", "Crab", "Pufferfish", "Blobfish", "Octopus", "Narwhal", "Baby Shark", "Megalodon", //aquatic box
                               "Toast", "Cereal", "Yogurt", "Breakfast Combo", "Orange Juice", "Milk", "Waffle", "Pancakes", "French Toast", "Pizza", //breakfast box
                               "Lil Bot", "Lovely Bot", "Angry Bot", "Happy Bot", "Watson", "Buddy Bot", "Brainy Bot", "Mega Bot", //bot box
@@ -235,7 +237,7 @@ function modifyRequestObject(xhr) {
                     Object.defineProperty(this, 'response',     {writable: true});
                     Object.defineProperty(this, 'responseText', {writable: true});
                     this.response = this.responseText = JSON.stringify(fakeData);
-            }
+                }
             });
             
 
