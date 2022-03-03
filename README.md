@@ -2,15 +2,15 @@
 
 # blooklet-utility-mod
 A userscript for Blooklet, compatible with tampermonkey.
-**Due to state management, some features will not work until joining the quiz, and some will have to be configured before joining the quiz. Please read each module's description.**
+> Due to state management, some features will not work until joining the quiz, and some will have to be configured before joining the quiz. Please read each module's description.
 
 # Features
+- Easy to use mod menu, just use tampermonkey/paste in console
 - Showing quiz data
   - Favourites, play count, internal ID, name, description
-  - View all questions and answers in new tab(You need to be logged in)
-- Unlock (almost) all skins
-  - Some skins are not unlockable(to be fixed).
-  - Some hidden skins are not unlockable.
+  - View all questions and answers in new tab(login required)
+- Unlock all skins
+> The ability to unlock skins requires the name of the skin to be known, include those of which that are hidden. If you know a skin name and would like to contribute, please open an issue and it will be added. 
 
 # Usage
 ## Tampermonkey
