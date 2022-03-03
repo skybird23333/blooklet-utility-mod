@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Blooklet Utility Mod
-// @version      0.2.1
+// @version      0.2.2
 // @description  This script is created for research and educational purposes. Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
 // @author       https://github.com/skybird23333
 // @match        https://www.blooket.com/play*
@@ -127,7 +127,7 @@ window.aapp = new Vue({
             </div>
             <div class="menu">
                 <div>
-                  <b style="font-size: large">AMOGUS</b>
+                  <b style="font-size: large">Menu</b>
                   <a href="https://github.com/skybird23333/blooklet-utility-mod" target="_blank" rel="noopener noreferrer">Github</a> <i>v0.2</i>
                 </div>
                 <button
@@ -215,10 +215,8 @@ function modifyRequestObject(xhr) {
                 }
             })
         }
-        if (arguments[1].includes("/api/users/unlocks")) {
-            window.aapp.$data.skin.fetched = true
-            if(window.aapp.$data.skin.unlock) {
-                const fakeData = {"unlocks":[
+
+        const fakeData = {"unlocks":[
                               "Elf", "Witch", "Wizard", "Fairy", "Slime", "Monster", "Jester", "Dragon", "Queen", "Unicorn", "King", //medieval box
                               "Two of Spades", "Eat Me", "Drink Me", "Alice", "Queen of Hearts", "Dormouse", "White Rabbit", "Cheshire Cat", "Caterpillar", "Mad Hatter", "King of Hearts", //wonderland box
                               "Earth", "Meteor", "Stars", "Alien", "Planet", "UFO", "Spaceship", "Astronaut", "Pink Astronaut", "Yellow Astronaut", "Black Astronaut", "Orange Astronaut", "Red Astronaut", "Brown Astronaut", //space box
@@ -228,8 +226,17 @@ function modifyRequestObject(xhr) {
                               "Pumpkin", "Swamp Monster", "Frankenstein", "Vampire", "Zombie", "Mummy", "Werewolf", "Ghost", "Haunted Pumpkin", //spooky box
                               "Sandwich" //sandvich
                                   ],"customBlooks":[]}
-                arguments[1] = 'data:application/json,' + encodeURI(JSON.stringify(fakeData))
-            }
+
+        if (arguments[1].includes("/api/users/unlocks")) {
+            window.aapp.$data.skin.fetched = true
+            this.addEventListener('readystatechange', function(event) {
+                if ( this.readyState === 4 ) {
+                    Object.defineProperty(this, 'response',     {writable: true});
+                    Object.defineProperty(this, 'responseText', {writable: true});
+                    this.response = this.responseText = JSON.stringify(fakeData);
+                }
+            });
+            
 
         }
         _open.apply(this, arguments);
