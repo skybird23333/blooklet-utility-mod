@@ -3,7 +3,7 @@
 // @version      0.2.2
 // @description  This script is created for research and educational purposes. Abusive usage of this script is not tolerated and the author is not responsible for any damage or harm caused due to usage of the script.
 // @author       https://github.com/skybird23333
-// @match        https://www.blooket.com/play*
+// @match        https://*.blooket.com/play*
 // @require      https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js
 // @updateURL    https://raw.githubusercontent.com/skybird23333/blooklet-utility-mod/main/index.js
 // @grant        none
@@ -22,13 +22,11 @@ style.innerHTML = `
 .active, .collapsible:hover {
   background-color: #ccc;
 }
-
 .modContent {
   transition: max-height 0.1s ease-out;
   max-height: 0;
   overflow: hidden;
 }
-
 .content {
   width: 250px;
   background-color: white;
@@ -37,7 +35,6 @@ style.innerHTML = `
   border-radius: 8px;
   border: 1px solid gray;
 }
-
 .menu {
   width: 100px;
   border: 1px solid gray;
@@ -45,19 +42,16 @@ style.innerHTML = `
   display: inline-block;
   margin-left: 3px;
 }
-
 .menu-option {
   width: 100%;
   border: none;
   background-color: white;
   padding: 4px;
 }
-
 .menu-option:hover {
   background-color: rebeccapurple;
   color: white;
 }
-
 .menu-option-active {
   background-color: rebeccapurple;
   color: white;
@@ -239,7 +233,7 @@ function modifyRequestObject(xhr) {
                     this.response = this.responseText = JSON.stringify(fakeData);
                 }
             });
-            
+
 
         }
         _open.apply(this, arguments);
